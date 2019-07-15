@@ -17,7 +17,7 @@ module.exports = function (app) {
     });
   });
 
-  app.post('/api/tasks', function(req, res) {
+  app.post('/api/tasks', function (req, res) {
     const record = nforce.createSObject('Kanban__c');
     record.set('AssignedName__c', req.body.assignedname__c);
     record.set('Title__c', req.body.title__c);
@@ -25,9 +25,9 @@ module.exports = function (app) {
     record.set('Status__c', req.body.status__c);
     record.set('DueDate__c', req.body.duedate__c);
     record.set('Color__c', req.body.color__c);
-  
+
     conn.insert({ sobject: record }, (err, resp) => {
-      if(!err) {
+      if (!err) {
         res.json({ success: true });
       } else {
         res.json(err);
@@ -35,11 +35,12 @@ module.exports = function (app) {
     });
   });
 
-  app.put('/api/tasks/:id', function(req, res) {
+  app.put('/api/tasks/:id', function (req, res) {
     const record = nforce.createSObject('Kanban__c');
     record.set('Id', req.params.id);
     record.set('Status__c', req.body.status__c);
-  
+    record.set('Color__c', req.body.color__c);
+
     conn.update({ sobject: record }, (err, data) => {
       if (!err) {
         res.json({ success: true });
